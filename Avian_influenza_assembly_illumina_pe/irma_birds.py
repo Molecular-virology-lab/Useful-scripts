@@ -3,15 +3,21 @@ import subprocess
 
 
 
-samples = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48']
+#samples = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '80', '81', '82', '88', '89', '90', '91', '92', '93', '94', '95', '96']
 #samples = ['01']
+samples = []
+with open('sample_list.csv', 'r') as smp_list:
+	for line in smp_list.readlines():
+		samples.append(line.strip('\n'))
 
 for sample in samples:
-	os.system("~/soft/flu-amd/IRMA FLU-utr "+sample+"* "+sample)
+	print(sample)
+	os.system("cat "+sample+"_* "+"> "+sample+".fastq.gz")
+	os.system("~/soft/flu-amd/IRMA FLU-utr "+sample+".fastq.gz "+sample)
 	#reply = subprocess.run(['/home/lmv/soft/flu-amd/IRMA', 'FLU-utr', sample+'*', sample])
 	os.system("cat "+sample+"/"+"*.fasta > "+sample+"/"+sample+".fas")
 	os.system("bwa-mem2 index "+sample+"/"+sample+".fas")
-	os.system("cat "+sample+"* "+" > "+sample+".fastq.gz")
+	#os.system("cat "+sample+"* "+" > "+sample+".fastq.gz")
 	os.system("bwa-mem2 mem -Y -t 4 "+sample+"/"+sample+".fas "+sample+".fastq.gz | samtools view -b | samtools sort -o "+sample+"/"+sample+".bam")
 	os.system("rm "+sample+".fastq.gz")
 	os.system("samtools index "+sample+"/"+sample+".bam")
