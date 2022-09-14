@@ -13,7 +13,7 @@ with open('sample_list.csv', 'r') as smp_list:
 for sample in samples:
 	print(sample)
 	os.system("cat "+sample+"_* "+"> "+sample+".fastq.gz")
-	os.system("~/soft/flu-amd/IRMA FLU-utr "+sample+".fastq.gz "+sample)
+	os.system("IRMA FLU-utr "+sample+".fastq.gz "+sample)
 	#reply = subprocess.run(['/home/lmv/soft/flu-amd/IRMA', 'FLU-utr', sample+'*', sample])
 	os.system("cat "+sample+"/"+"*.fasta > "+sample+"/"+sample+".fas")
 	os.system("bwa-mem2 index "+sample+"/"+sample+".fas")
